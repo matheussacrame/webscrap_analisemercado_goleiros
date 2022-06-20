@@ -1,0 +1,176 @@
+# Importando bibliotecas de python
+
+import pandas as pd
+from bs4 import BeautifulSoup as bs
+import requests
+import re
+import numpy as np
+
+# Fazendo o scrap das listas de 2022
+
+lista_valores_mercado_2022 = []
+lista_nomes_jogadores_2022 = []
+
+for pagenumber in range(1,5):
+    url = "https://www.transfermarkt.com/transfers/endendevertraege/statistik?plus=0&jahr=2022&ausrichtung=Torwart&spielerposition_id=alle&altersklasse=alle&land_id=0&yt0=Show&page="+str(pagenumber)
+    cabecalho = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36'}
+    documento = requests.get(url, headers=cabecalho)
+    doc_soup = bs(documento.content, "html.parser")
+    
+    table_total = doc_soup.find("table", class_="items")
+    table_body = table_total.tbody
+    
+    todas_linhas = table_body.find_all("td", class_="rechts hauptlink")
+    todas_linhas_string = ' '.join([str(item) for item in todas_linhas])
+    lista_valores_mercado_2022.extend(re.findall(r'td class="rechts hauptlink">€(.*?)0m', todas_linhas_string))
+
+    todas_linhas_jogadores = table_body.find_all("img", class_="bilderrahmen-fixed lazy lazy")
+    todas_linhas_jogadores_string = ' '.join([str(item) for item in todas_linhas_jogadores])
+    lista_nomes_jogadores_2022.extend(re.findall(r'img alt="(.*?)" class="bilderrahmen-fixed lazy lazy', todas_linhas_jogadores_string))
+    
+    lista_ano_2022 = ["2022"]*39
+    
+ # Criando o dataframe de 2022
+  
+ dataframe2022 = pd.DataFrame({"Jogador":lista_nomes_jogadores_2022[0:39], "Valor": lista_valores_mercado_2022[0:39], "Ano_Contrato":lista_ano_2022})
+ dataframe2022.head(5)
+ 
+ # Repetindo o processo para 2023, 24, 25, 26 e 27
+ 
+lista_valores_mercado_2023 = []
+lista_nomes_jogadores_2023 = []
+
+for pagenumber in range(1,4):
+    url = "https://www.transfermarkt.com/transfers/endendevertraege/statistik?plus=0&jahr=2023&ausrichtung=Torwart&spielerposition_id=alle&altersklasse=alle&land_id=0&yt0=Show&page="+str(pagenumber)
+    cabecalho = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36'}
+    documento = requests.get(url, headers=cabecalho)
+    doc_soup = bs(documento.content, "html.parser")
+    
+    table_total = doc_soup.find("table", class_="items")
+    table_body = table_total.tbody
+    
+    todas_linhas = table_body.find_all("td", class_="rechts hauptlink")
+    todas_linhas_string = ' '.join([str(item) for item in todas_linhas])
+    lista_valores_mercado_2023.extend(re.findall(r'td class="rechts hauptlink">€(.*?)0m', todas_linhas_string))
+
+    todas_linhas_jogadores = table_body.find_all("img", class_="bilderrahmen-fixed lazy lazy")
+    todas_linhas_jogadores_string = ' '.join([str(item) for item in todas_linhas_jogadores])
+    lista_nomes_jogadores_2023.extend(re.findall(r'img alt="(.*?)" class="bilderrahmen-fixed lazy lazy', todas_linhas_jogadores_string))
+    
+print(len(lista_valores_mercado_2023))
+print(len(lista_nomes_jogadores_2023))
+lista_ano_2023 = ["2023"]*75
+dataframe2023 = pd.DataFrame({"Jogador":lista_nomes_jogadores_2023, "Valor": lista_valores_mercado_2023, "Ano_Contrato":lista_ano_2023})
+dataframe2023.head(5)
+
+lista_valores_mercado_2024 = []
+lista_nomes_jogadores_2024 = []
+
+for pagenumber in range(1,4):
+    url = "https://www.transfermarkt.com/transfers/endendevertraege/statistik?plus=0&jahr=2024&ausrichtung=Torwart&spielerposition_id=alle&altersklasse=alle&land_id=0&yt0=Show&page="+str(pagenumber)
+    cabecalho = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36'}
+    documento = requests.get(url, headers=cabecalho)
+    doc_soup = bs(documento.content, "html.parser")
+    
+    table_total = doc_soup.find("table", class_="items")
+    table_body = table_total.tbody
+    
+    todas_linhas = table_body.find_all("td", class_="rechts hauptlink")
+    todas_linhas_string = ' '.join([str(item) for item in todas_linhas])
+    lista_valores_mercado_2024.extend(re.findall(r'td class="rechts hauptlink">€(.*?)0m', todas_linhas_string))
+
+    todas_linhas_jogadores = table_body.find_all("img", class_="bilderrahmen-fixed lazy lazy")
+    todas_linhas_jogadores_string = ' '.join([str(item) for item in todas_linhas_jogadores])
+    lista_nomes_jogadores_2024.extend(re.findall(r'img alt="(.*?)" class="bilderrahmen-fixed lazy lazy', todas_linhas_jogadores_string))
+ 
+print(len(lista_valores_mercado_2024))
+print(len(lista_nomes_jogadores_2024))
+lista_ano_2024 = ["2024"]*75
+dataframe2024 = pd.DataFrame({"Jogador":lista_nomes_jogadores_2024, "Valor": lista_valores_mercado_2024, "Ano_Contrato":lista_ano_2024})
+dataframe2024.head(5)
+
+lista_valores_mercado_2025 = []
+lista_nomes_jogadores_2025 = []
+
+for pagenumber in range(1,4):
+    url = "https://www.transfermarkt.com/transfers/endendevertraege/statistik?plus=0&jahr=2025&ausrichtung=Torwart&spielerposition_id=alle&altersklasse=alle&land_id=0&yt0=Show&page="+str(pagenumber)
+    cabecalho = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36'}
+    documento = requests.get(url, headers=cabecalho)
+    doc_soup = bs(documento.content, "html.parser")
+    
+    table_total = doc_soup.find("table", class_="items")
+    table_body = table_total.tbody
+    
+    todas_linhas = table_body.find_all("td", class_="rechts hauptlink")
+    todas_linhas_string = ' '.join([str(item) for item in todas_linhas])
+    lista_valores_mercado_2025.extend(re.findall(r'td class="rechts hauptlink">€(.*?)0m', todas_linhas_string))
+
+    todas_linhas_jogadores = table_body.find_all("img", class_="bilderrahmen-fixed lazy lazy")
+    todas_linhas_jogadores_string = ' '.join([str(item) for item in todas_linhas_jogadores])
+    lista_nomes_jogadores_2025.extend(re.findall(r'img alt="(.*?)" class="bilderrahmen-fixed lazy lazy', todas_linhas_jogadores_string))
+    
+print(len(lista_valores_mercado_2025))
+print(len(lista_nomes_jogadores_2025))
+lista_ano_2025 = ["2025"]*66
+dataframe2025 = pd.DataFrame({"Jogador":lista_nomes_jogadores_2025[0:66], "Valor": lista_valores_mercado_2025, "Ano_Contrato":lista_ano_2025})
+dataframe2025.tail(5)
+
+lista_valores_mercado_2026 = []
+lista_nomes_jogadores_2026 = []
+
+for pagenumber in range(1,2):
+    url = "https://www.transfermarkt.com/transfers/endendevertraege/statistik?plus=0&jahr=2026&ausrichtung=Torwart&spielerposition_id=alle&altersklasse=alle&land_id=0&yt0=Show&page="+str(pagenumber)
+    cabecalho = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36'}
+    documento = requests.get(url, headers=cabecalho)
+    doc_soup = bs(documento.content, "html.parser")
+    
+    table_total = doc_soup.find("table", class_="items")
+    table_body = table_total.tbody
+    
+    todas_linhas = table_body.find_all("td", class_="rechts hauptlink")
+    todas_linhas_string = ' '.join([str(item) for item in todas_linhas])
+    lista_valores_mercado_2026.extend(re.findall(r'td class="rechts hauptlink">€(.*?)0m', todas_linhas_string))
+
+    todas_linhas_jogadores = table_body.find_all("img", class_="bilderrahmen-fixed lazy lazy")
+    todas_linhas_jogadores_string = ' '.join([str(item) for item in todas_linhas_jogadores])
+    lista_nomes_jogadores_2026.extend(re.findall(r'img alt="(.*?)" class="bilderrahmen-fixed lazy lazy', todas_linhas_jogadores_string))
+
+lista_valores_mercado_2027 = []
+lista_nomes_jogadores_2027 = []
+
+for pagenumber in range(1,2):
+    url = "https://www.transfermarkt.com/transfers/endendevertraege/statistik?plus=0&jahr=2027&ausrichtung=Torwart&spielerposition_id=alle&altersklasse=alle&land_id=0&yt0=Show&page="+str(pagenumber)
+    cabecalho = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36'}
+    documento = requests.get(url, headers=cabecalho)
+    doc_soup = bs(documento.content, "html.parser")
+    
+    table_total = doc_soup.find("table", class_="items")
+    table_body = table_total.tbody
+    
+    todas_linhas = table_body.find_all("td", class_="rechts hauptlink")
+    todas_linhas_string = ' '.join([str(item) for item in todas_linhas])
+    lista_valores_mercado_2027.extend(re.findall(r'td class="rechts hauptlink">€(.*?)0m', todas_linhas_string))
+
+    todas_linhas_jogadores = table_body.find_all("img", class_="bilderrahmen-fixed lazy lazy")
+    todas_linhas_jogadores_string = ' '.join([str(item) for item in todas_linhas_jogadores])
+    lista_nomes_jogadores_2027.extend(re.findall(r'img alt="(.*?)" class="bilderrahmen-fixed lazy lazy', todas_linhas_jogadores_string))
+    
+print(len(lista_valores_mercado_2026))
+print(len(lista_nomes_jogadores_2026))
+print(len(lista_valores_mercado_2027))
+print(len(lista_nomes_jogadores_2027))
+lista_ano_2026 = ["2026"]*23
+lista_ano_2027 = ["2027"]*4
+dataframe2026 = pd.DataFrame({"Jogador":lista_nomes_jogadores_2026[0:23], "Valor": lista_valores_mercado_2026, "Ano_Contrato":lista_ano_2026})
+print(dataframe2026.tail(5))
+dataframe2027 = pd.DataFrame({"Jogador":lista_nomes_jogadores_2027[0:4], "Valor": lista_valores_mercado_2027, "Ano_Contrato":lista_ano_2027})
+print(dataframe2027.head(4))
+
+# Concatenando os dataframes
+
+dataframe_final = pd.concat([dataframe2022, dataframe2023, dataframe2024, dataframe2025, dataframe2026, dataframe2027], ignore_index=True)
+print(dataframe_final.head(10))
+
+# Salvando em .csv
+
+dataframe_final.to_csv("C:\\Program Files (x86)\\GoleirosContratos.csv", index=False)
